@@ -14,6 +14,14 @@ from wordcloud import WordCloud, ImageColorGenerator
 import matplotlib.pyplot  as plt
 import plotly.express as px
 stop=set(stopwords.words('english'))
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('omw-1.4')
+
 import pickle
 # load pre-trained model
 import en_core_web_sm
@@ -22,18 +30,11 @@ from spacy.matcher import Matcher
 # initialize matcher with a vocab
 matcher = Matcher(nlp.vocab)
 
-mfile = BytesIO(requests.get('https://github.com/MoinDalvs/Resume_Classification/blob/main/model_id.pkl?raw=true').content)
+mfile = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_Classification/edit/main/resume.py').content)
 model = load(mfile)
 
-#loading model
-model = pickle.load(open('RF.pkl','rb'))
 
 
-# In[3]:
-
-
-nltk.download('wordnet')
-nltk.download('stopwords')
 
 
 # In[4]:
