@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 import pandas as pd
 import streamlit as st
@@ -20,10 +15,15 @@ import matplotlib.pyplot  as plt
 import plotly.express as px
 stop=set(stopwords.words('english'))
 import pickle
+# load pre-trained model
+import en_core_web_sm
+nlp = en_core_web_sm.load()
+from spacy.matcher import Matcher
+# initialize matcher with a vocab
+matcher = Matcher(nlp.vocab)
 
-
-# In[2]:
-
+mfile = BytesIO(requests.get('https://github.com/MoinDalvs/Resume_Classification/blob/main/model_id.pkl?raw=true').content)
+model = load(mfile)
 
 #loading model
 model = pickle.load(open('RF.pkl','rb'))
