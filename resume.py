@@ -30,7 +30,7 @@ from spacy.matcher import Matcher
 # initialize matcher with a vocab
 matcher = Matcher(nlp.vocab)
 
-mfile = BytesIO(requests.get('RF.pkl').content)
+mfile = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_Classification/blob/main/RF.pkl?raw=true').content)
 model = load(mfile)
 
 #make it look nice from the start
@@ -114,7 +114,6 @@ def display(doc_file):
 
 # In[5]:
 
-
 def preprocess(sentence):
     sentence=str(sentence)
     sentence = sentence.lower()
@@ -131,7 +130,39 @@ def preprocess(sentence):
     return " ".join(lemma_words)
 
 
-# In[6]:
+# Function to extract experience details
+def expDetails(Text):
+    global sent
+   
+    Text = Text.split()
+   
+    for i in range(len(Text)-2):
+        Text[i].lower()
+        
+        if Text[i] ==  'years':
+            sent =  Text[i-2] + ' ' + Text[i-1] +' ' + Text[i] +' '+ Text[i+1] +' ' + Text[i+2]
+            l = re.findall(r'\d*\.?\d+',sent)
+            for i in l:
+                a = float(i)
+            return(a)
+            return (sent)
+
+#Extracting skills
+def extract_skills(resume_text):
+
+    nlp_text = nlp(resume_text)
+    noun_chunks = nlp_text.noun_chunks
+
+    # removing stop words and implementing word tokenization
+    tokens = [token.text for token in nlp_text if not token.is_stop]
+            
+    # reading the csv file
+    data = pd.read_csv("https://raw.githubusercontent.com/MoinDalvs/Resume_Parser_and_Classification/main/Files/skills.csv") 
+            
+    # extract values
+    skills = list(data.columns.values)
+            
+    skillset = []
 
 
 def mostcommon_words(cleaned,i):
