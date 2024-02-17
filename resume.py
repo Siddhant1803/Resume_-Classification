@@ -30,7 +30,7 @@ from spacy.matcher import Matcher
 # initialize matcher with a vocab
 matcher = Matcher(nlp.vocab)
 
-mfile = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_Classification/edit/main/resume.py?raw=true').content)
+mfile = BytesIO(requests.get('RF.pkl').content)
 model = load(mfile)
 
 #make it look nice from the start
