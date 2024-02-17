@@ -157,75 +157,393 @@ def extract_skills(resume_text):
     tokens = [token.text for token in nlp_text if not token.is_stop]
             
     # reading the csv file
-    data = pd.read_csv("https://raw.githubusercontent.com/MoinDalvs/Resume_Parser_and_Classification/main/Files/skills.csv") 
+    data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv") 
             
     # extract values
     skills = list(data.columns.values)
             
     skillset = []
 
+ # check for one-grams (example: python)
+    for token in tokens:
+        if token.lower() in skills:
+            skillset.append(token)
+            
+    # check for bi-grams and tri-grams (example: machine learning)
+    for token in noun_chunks:
+        token = token.text.lower().strip()
+        if token in skills:
+            skillset.append(token)
+            
+    return [i.capitalize() for i in set([i.lower() for i in skillset])]
 
-def mostcommon_words(cleaned,i):
-    tokenizer = RegexpTokenizer(r'\w+')
-    words=tokenizer.tokenize(cleaned)
-    mostcommon=FreqDist(cleaned.split()).most_common(i)
-    return 
+if menu_id == 'Resume Classification':
+    with hc.HyLoader('Please Wait!',hc.Loaders.standard_loaders,index=5):
+        time.sleep(0.8)
 
+    st.title("RESUME CLASSIFICATION")
+        
+    st.subheader('Upload Resumes')
 
-# In[7]:
+    st.write(r'Note: Classifies only Peoplesoft, Workday, SQL Developer and ReactJS Developer Resumes')
 
+ tab1, tab2 = st.tabs(["💾 Single File","📁 Multiple Files"])
 
-def display_wordcloud(mostcommon):
-    wordcloud=WordCloud(width=1000, height=600, background_color='black').generate(str(mostcommon))
-    a=px.imshow(wordcloud)
-    st.plotly_chart(a)
+    with tab1:
 
+        upload_file1 = st.file_uploader('', type= ['docx'], accept_multiple_files=False)   
+        st.write('*Note: For different Resumes Results Reupload')  
+        if upload_file1 is not None:
+            displayed=extract_text_from_docx(upload_file1)
+            cleaned=preprocess(display(upload_file1))
+            predicted= model.predict(model.transform([cleaned]))
 
-# In[8]:
+            st.header("The "+ upload_file1.name +" is Applied for"+ " " + predicted + " " + "Profile")
+            expander = st.expander("See Resume")
+            expander.write(displayed)
+            if predicted == 'Workday':
+                st.image("https://www.workday.com/content/dam/web/en-us/images/social/workday-og-theme.png",width=480)
+            elif predicted == 'SQL Developer':
+                st.image("https://wallpaperaccess.com/full/2138094.jpg",width=480)
+            elif predicted == 'React Developer':
+                st.image("https://i0.wp.com/www.electrumitsolutions.com/wp-content/uploads/2020/12/wp4923992-react-js-wallpapers.png",width=480)
+            elif predicted == 'Peoplesoft':
+                st.image("https://s3.amazonaws.com/questoracle-staging/wordpress/uploads/2019/07/25164143/PeopleSoft-Now.jpg",width=480)
 
+    with tab2:
+        st.write('Upload Folder Containing Multiple .docx Files')
 
-def display_words(mostcommon_small):
-    x,y=zip(*mostcommon_small)
-    chart=pd.DataFrame({'keys': x,'values': y})
-    fig=px.bar(chart,x=chart['keys'],y=chart['values'],height=700,width=700)
-    st.plotly_chart(fig)
+        file_type=pd.DataFrame(columns=['Uploaded File', 'Experience', 'Skills', 'Predicted Profile'], dtype=object)
+        filename = []
+        predicted = []
+        experience = []
+        skills = []
 
-
-# In[9]:
-
-
-def main():
-    st.title('DOCUMENT CLASSIFICATION')
-    upload_file = st.file_uploader('Hey,Upload Your Resume ',
-                                type= ['docx','pdf'],accept_multiple_files=True)
-    if st.button("Process"):
-        for doc_file in upload_file:
+        upload_file2 = st.file_uploader('', type= ['docx'], accept_multiple_files=True)
+        
+        for doc_file in upload_file2:
             if doc_file is not None:
-                file_details = {'filename':[doc_file.name],
-                               'filetype':doc_file.type.split('.')[-1].upper(),
-                               'filesize':str(doc_file.size)+' KB'}
-                file_type=pd.DataFrame(file_details)
-                st.write(file_type.set_index('filename'))
-                displayed=display(doc_file)
+                filename.append(doc_file.name)   
+                cleaned=preprocess(extract_text_from_docx(doc_file))
+                predicted.append(model.predict(model1.transform([cleaned])))
+                extText = extract_text_from_docx(doc_file)
+                exp = expDetails(extText)
+                experience.append(exp)
+                skills.append(extract_skills(extText))
 
-                cleaned=preprocess(display(doc_file))
-                predicted= model.predict(vectors.transform([cleaned]))
+        if len(predicted) > 0:
+            file_type['Uploaded File'] = filename
+            file_type['Experience'] = experience
+            file_type['Skills'] = skills
+            file_type['Predicted Profile'] = predicted
+            # file_type
+            st.table(file_type.style.format({'Experience': '{:.1f}'}))
 
-                string='The Uploaded Resume is belongs to '+predicted[0]
-                st.header(string)
+            # opt = st.radio("Choose candidate with prospective of :",["Skills","Experience(years)"])
+            # if opt == "Skills":
+            #     Skill_option = file_type["Skills"].unique().tolist()
+            #     Skill = st.selectbox("Choose the candidate by selecting skills",Skill_option, 0)
 
-                st.subheader('WORDCLOUD')
-                display_wordcloud(mostcommon_words(cleaned,100))
+if menu_id == 'Resume Parser':
 
-                st.header('Frequency of 20 Most Common Words')
-                display_words(mostcommon_words(cleaned,20))
+    with hc.HyLoader('Please Wait!',hc.Loaders.standard_loaders,index=5):
+        time.sleep(2)
+    
+    # FOR INDIAN RESUME RUN THE BELOW FUNCTION TO EXTRACT MOBILE NUMBER
+    def extract_mobile_number(text):
+        phone= re.findall(r'[8-9]{1}[0-9]{9}',text)
+        
+        if len(phone) > 10:
+            return '+' + phone
+        else:
+            return phone
 
-if __name__ == '__main__':
-    main()
+    def extract_email(text):
+            email = re.findall(r"([^@|\s]+@[^@]+\.[^@|\s]+)", text)
+            if email:
+                try:
+                    return email[0].split()[0].strip(';')
+                except IndexError:
+                    return None
+    # Function to remove punctuation and tokenize the text
+    def tokenText(extText):
+       
+        # Remove punctuation marks
+        punc = r'''!()-[]{};:'"\,.<>/?@#$%^&*_~'''
+        for ele in extText:
+            if ele in punc:
+                puncText = extText.replace(ele, "")
+                
+        # Tokenize the text and remove stop words
+        stop_words = set(stopwords.words('english'))
+        puncText.split()
+        word_tokens = word_tokenize(puncText)
+        TokenizedText = [w for w in word_tokens if not w.lower() in stop_words]
+        TokenizedText = []
+      
+        for w in word_tokens:
+            if w not in stop_words:
+                TokenizedText.append(w)
+        return(TokenizedText)
+
+    # Function to extract Name and contact details
+    def extract_name(Text):
+        name = ''  
+        for i in range(0,3):
+            name = " ".join([name, Text[i]])
+        return(name)
+    
+    # Grad all general stop words
+    STOPWORDS = set(stopwords.words('english'))
+    
+    # Education Degrees
+    EDUCATION = ['BE','B.E.', 'B.E', 'BS','B.S','B.Com','BCA','ME','M.E', 'M.E.', 'M.S','B.com','10','10+2','BTECH', 'B.TECH', 'M.TECH', 'MTECH', 'SSC', 'HSC', 'C.B.S.E','CBSE','ICSE', 'X', 'XII','10th','12th',' 10th',' 12th','Bachelor of Arts in Mathematics','Master of Science in Analytics','Bachelor of Business Administration','Major: Business Management']
+       
+   def extract_education(text):
+        nlp_text = nlp(text)
+
+        # Sentence Tokenizer
+        nlp_text = [sent.text.strip() for sent in nlp_text.sents]
 
 
-# In[ ]:
+        edu = {}
+        # Extract education degree
+        for index, t in enumerate(nlp_text):
+            for tex in t.split():
+                # Replace all special symbols
+                tex = re.sub(r'[?|$|.|!|,]', r'', tex)
+                if tex in EDUCATION and tex not in STOPWORDS:
+                    edu[tex] = t + nlp_text[index + 1]
+
+        # Extract year
+        education = []
+        for key in edu.keys():
+            year = re.search(re.compile(r'(((20|19)(\d{2})))'), edu[key])
+            if year:
+                education.append((key, ''.join(year[0])))
+            else:
+                education.append(key)
+        return education
+
+    def extract_skills(resume_text):
+
+            nlp_text = nlp(resume_text)
+            noun_chunks = nlp_text.noun_chunks
+
+            # removing stop words and implementing word tokenization
+            tokens = [token.text for token in nlp_text if not token.is_stop]
+            
+            # reading the csv file
+            data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv") 
+            
+            # extract values
+            skills = list(data.columns.values)
+            
+            skillset = []
+            
+            # check for one-grams (example: python)
+            for token in tokens:
+                if token.lower() in skills:
+                    skillset.append(token)
+            
+            # check for bi-grams and tri-grams (example: machine learning)
+            for token in noun_chunks:
+                token = token.text.lower().strip()
+                if token in skills:
+                    skillset.append(token)
+            
+            return [i.capitalize() for i in set([i.lower() for i in skillset])]
+        def string_found(string1, string2):
+            if re.search(r"\b" + re.escape(string1) + r"\b", string2):
+                return True
+            return False
+
+    def extract_entity_sections_grad(text):
+        '''
+        Helper function to extract all the raw text from sections of resume specifically for 
+        graduates and undergraduates
+        :param text: Raw text of resume
+        :return: dictionary of entities
+        '''
+        text_split = [i.strip() for i in text.split('\n')]
+        entities = {}
+        key = False
+        for phrase in text_split:
+            if len(phrase) == 1:
+                p_key = phrase
+            else:
+                p_key = set(phrase.lower().split()) & set(cs.RESUME_SECTIONS_GRAD)
+            try:
+                p_key = list(p_key)[0]
+            except IndexError:
+                pass
+            if p_key in cs.RESUME_SECTIONS_GRAD:
+                entities[p_key] = []
+                key = p_key
+            elif key and phrase.strip():
+                entities[key].append(phrase)
+        return entities
+    
+    # Function to extract experience details
+    def expDetails(Text):
+        global sent
+       
+        Text = Text.split()
+       
+        for i in range(len(Text)-2):
+            Text[i].lower()
+            
+            if Text[i] ==  'years':
+                sent =  Text[i-2] + ' ' + Text[i-1] +' ' + Text[i] +' '+ Text[i+1] +' ' + Text[i+2]
+                l = re.findall(r'\d*\.?\d+',sent)
+                for i in l:
+                    a = float(i)
+                return(a)
+                return (sent)
+
+     def extract_experience(resume_text):
+        '''
+        Helper function to extract experience from resume text
+        :param resume_text: Plain resume text
+        :return: list of experience
+        '''
+        wordnet_lemmatizer = WordNetLemmatizer()
+        stop_words = set(stopwords.words('english'))
+
+        # word tokenization 
+        word_tokens = nltk.word_tokenize(resume_text)
+
+        # remove stop words and lemmatize  
+        filtered_sentence = [w for w in word_tokens if not w in stop_words and wordnet_lemmatizer.lemmatize(w) not in stop_words] 
+        sent = nltk.pos_tag(filtered_sentence)
+
+        # parse regex
+        cp = nltk.RegexpParser('P: {<NNP>+}')
+        cs = cp.parse(sent)
+        
+        # for i in cs.subtrees(filter=lambda x: x.label() == 'P'):
+        #     print(i)
+        
+        test = []
+        
+        for vp in list(cs.subtrees(filter=lambda x: x.label()=='P')):
+            test.append(" ".join([i[0] for i in vp.leaves() if len(vp.leaves()) >= 2]))
+
+        # Search the word 'experience' in the chunk and then print out the text after it
+        x = [x[x.lower().index('experience') + 10:] for i, x in enumerate(test) if x and 'experience' in x.lower()]
+        return x
 
 
+    def extract_dob(text):
+            
+        result1=re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{4}",text)
+        result2=re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{4}",text)           
+        result3= re.findall(r"[\d]{1,2} [ADFJMNOSadfjmnos]\w* [\d]{4}",text)
+        result4=re.findall(r"([\d]{1,2})\.([\d]{1,2})\.([\d]{4})",text)
+                    
+        l=[result1,result2,result3,result4]
+        for i in l:
+            if i==[]:
+                continue
+            else:
+                return i
 
+     def extract_text_from_docx(path):
+        '''
+        Helper function to extract plain text from .docx files
+        :param doc_path: path to .docx file to be extracted
+        :return: string of extracted text
+        '''
+        if path.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+            temp = docx2txt.process(path)
+            return temp
 
+    def display(docx_path):
+        txt = docx2txt.process(docx_path)
+        if txt:
+            return txt.replace('\t', ' ')
+
+    df = pd.DataFrame(columns=['Name','Mobile No.', 'Email','DOB','Education Qualifications','Skills','Experience (Years)'], dtype=object)
+    
+     st.title("RESUME PARSER")
+        
+    st.subheader('Upload Resume (Single File Accepted) 👇')
+    upload_file3 = st.file_uploader('', type= ['docx'], accept_multiple_files=False)
+
+    st.write('*Note: For different Resumes Results Reupload')    
+    
+    if upload_file3 is not None:
+        displayed=display(upload_file3)
+        
+        i=0
+        text = extract_text_from_docx(upload_file3)
+        tokText = tokenText(text)
+        df.loc[i,'Name']=extract_name(tokText)
+        df.loc[i,'Mobile No.']=extract_mobile_number(text)
+        df.loc[i,'Email']=extract_email(text)
+        df.loc[i,'DOB']=extract_dob(text)
+        df.loc[i,'Education Qualifications']=extract_education(text)
+        df.loc[i,'Skills']=extract_skills(text)
+        df.loc[i,'Experience (Years)']=expDetails(text) 
+        experience_list1=extract_entity_sections_grad(text) 
+
+        if 'experience' in experience_list1:
+            experience_list=experience_list1['experience']
+            df.loc[i,'Last Position']=extract_experience(text)
+            df.loc[i,'Competence']=extract_competencies(text,experience_list)
+            df.loc[i,'competence score']=extract_competencies_score(text,experience_list)
+
+        else:
+            df.loc[i,'Last Position']='NA'
+            df.loc[i,'Competence']='NA'
+            df.loc[i,'competence score']='NA'
+
+        st.header("**Resume Analysis**")
+        st.success("Hello "+ df['Name'][0])
+
+        col1, col2 = st.columns(2)
+ 
+        with col1:
+
+            st.header("Basic info")
+            try:        
+                st.subheader('Name: '+ df['Name'][0])
+                st.subheader('Experience (Years): ' + str(df['Experience (Years)'][0]))
+                st.subheader('Last Position: ' + str(df['Last Position'][0]))
+                st.subheader('Competence: ' + str(df['Competence'][0]))
+                st.subheader('Education: ' + str(df['Education Qualifications'][0]))
+                st.subheader('Email: ' + str(df['Email'][0]))
+                st.subheader('Contact: ' + str(df['Mobile No.'][0]))
+                st.subheader('Date of Birth: ' + str(df['DOB'][0]))
+            except:
+                pass
+
+            expander = st.expander("See Resume")
+            expander.write(displayed)    
+
+        with col2:
+            st.header("**Skills Analysis💡**")
+            ## shows skill
+            keywords = st_tags(label='### Skills that'+ df['Name'][0] + ' have',
+            text=' -- Skills',value=df['Skills'][0],key = '1')
+
+            st.subheader("**Competence Score📝**")
+            st.markdown(
+                        """
+                        <style>
+                            .stProgress > div > div > div > div {
+                                background-color: #d73b5c;
+                            }
+                        </style>""",
+                        unsafe_allow_html=True,
+                    )
+            my_bar = st.progress(0)
+            score = 0
+            if df['competence score'][0] != 'NA':
+                for percent_complete in range(int(df['competence score'][0])):
+                    score +=1
+                    time.sleep(0.1)
+                    my_bar.progress(percent_complete + 1)
+                st.success(df['Name'][0] + "'s Competence Score: " + str(score))
+
+            df.T
