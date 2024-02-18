@@ -202,8 +202,8 @@ if menu_id == 'Resume Classification':
     st.subheader('Upload Resumes')
 
     st.write(r'Note: Classifies only Peoplesoft, Workday, SQL Developer and ReactJS Developer Resumes')
-
- tab1, tab2 = st.tabs(["💾 Single File","📁 Multiple Files"])
+    
+    tab1, tab2 = st.tabs(["💾 Single File","📁 Multiple Files"])
 
     with tab1:
 
@@ -279,8 +279,8 @@ if menu_id == 'Resume Parser':
         if email:
             try:
                 return email[0].split()[0].strip(';')
-                except IndexError:
-                    return None
+            except IndexError:
+                return None
     # Function to remove punctuation and tokenize the text
     def tokenText(extText):
        
@@ -342,7 +342,7 @@ if menu_id == 'Resume Parser':
         return education
 
     def extract_skills(resume_text):
-
+        
             nlp_text = nlp(resume_text)
             noun_chunks = nlp_text.noun_chunks
 
@@ -369,10 +369,10 @@ if menu_id == 'Resume Parser':
                     skillset.append(token)
             
             return [i.capitalize() for i in set([i.lower() for i in skillset])]
-        def string_found(string1, string2):
-            if re.search(r"\b" + re.escape(string1) + r"\b", string2):
-                return True
-            return False
+    def string_found(string1, string2):
+        if re.search(r"\b" + re.escape(string1) + r"\b", string2):
+            return True
+        return False
 
     def extract_entity_sections_grad(text):
         '''
@@ -417,7 +417,7 @@ if menu_id == 'Resume Parser':
                 return(a)
                 return (sent)
 
-     def extract_experience(resume_text):
+    def extract_experience(resume_text):
         '''
         Helper function to extract experience from resume text
         :param resume_text: Plain resume text
@@ -464,7 +464,7 @@ if menu_id == 'Resume Parser':
             else:
                 return i
 
-     def extract_text_from_docx(path):
+    def extract_text_from_docx(path):
         '''
         Helper function to extract plain text from .docx files
         :param doc_path: path to .docx file to be extracted
@@ -481,7 +481,7 @@ if menu_id == 'Resume Parser':
 
     df = pd.DataFrame(columns=['Name','Mobile No.', 'Email','DOB','Education Qualifications','Skills','Experience (Years)'], dtype=object)
     
-     st.title("RESUME PARSER")
+    st.title("RESUME PARSER")
         
     st.subheader('Upload Resume (Single File Accepted) 👇')
     upload_file3 = st.file_uploader('', type= ['docx'], accept_multiple_files=False)
