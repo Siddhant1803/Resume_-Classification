@@ -93,7 +93,19 @@ if menu_id == 'Home':
         
         with col1:
             st.subheader("Count of Categories")
-            st.image(
+            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/categories_count.png?raw=true')
+            st.write('Data only contain 4 categories')
+
+        with col2:
+            st.subheader("Overall Common Words in Data")
+            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/overall_common_word.png?raw=true')
+
+        st.subheader("Word Count Category Wise")
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/word_count_categories_wise.png?raw=true')
+
+        st.subheader("Top 10 Words Contain in each Category")
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/top_10_words_categories_wise.png?raw=true')
+                         
 
 def extract_text_from_docx(docx_path):
 
@@ -230,7 +242,7 @@ if menu_id == 'Resume Classification':
             if doc_file is not None:
                 filename.append(doc_file.name)   
                 cleaned=preprocess(extract_text_from_docx(doc_file))
-                predicted.append(model.predict(model1.transform([cleaned])))
+                predicted.append(model.predict(model.transform([cleaned])))
                 extText = extract_text_from_docx(doc_file)
                 exp = expDetails(extText)
                 experience.append(exp)
@@ -264,10 +276,10 @@ if menu_id == 'Resume Parser':
             return phone
 
     def extract_email(text):
-            email = re.findall(r"([^@|\s]+@[^@]+\.[^@|\s]+)", text)
-            if email:
-                try:
-                    return email[0].split()[0].strip(';')
+        email = re.findall(r"([^@|\s]+@[^@]+\.[^@|\s]+)", text)
+        if email:
+            try:
+                return email[0].split()[0].strip(';')
                 except IndexError:
                     return None
     # Function to remove punctuation and tokenize the text
@@ -304,7 +316,7 @@ if menu_id == 'Resume Parser':
     # Education Degrees
     EDUCATION = ['BE','B.E.', 'B.E', 'BS','B.S','B.Com','BCA','ME','M.E', 'M.E.', 'M.S','B.com','10','10+2','BTECH', 'B.TECH', 'M.TECH', 'MTECH', 'SSC', 'HSC', 'C.B.S.E','CBSE','ICSE', 'X', 'XII','10th','12th',' 10th',' 12th','Bachelor of Arts in Mathematics','Master of Science in Analytics','Bachelor of Business Administration','Major: Business Management']
        
-   def extract_education(text):
+    def extract_education(text):
         nlp_text = nlp(text)
 
         # Sentence Tokenizer
@@ -495,13 +507,9 @@ if menu_id == 'Resume Parser':
         if 'experience' in experience_list1:
             experience_list=experience_list1['experience']
             df.loc[i,'Last Position']=extract_experience(text)
-            df.loc[i,'Competence']=extract_competencies(text,experience_list)
-            df.loc[i,'competence score']=extract_competencies_score(text,experience_list)
-
         else:
             df.loc[i,'Last Position']='NA'
-            df.loc[i,'Competence']='NA'
-            df.loc[i,'competence score']='NA'
+           
 
         st.header("**Resume Analysis**")
         st.success("Hello "+ df['Name'][0])
@@ -515,7 +523,6 @@ if menu_id == 'Resume Parser':
                 st.subheader('Name: '+ df['Name'][0])
                 st.subheader('Experience (Years): ' + str(df['Experience (Years)'][0]))
                 st.subheader('Last Position: ' + str(df['Last Position'][0]))
-                st.subheader('Competence: ' + str(df['Competence'][0]))
                 st.subheader('Education: ' + str(df['Education Qualifications'][0]))
                 st.subheader('Email: ' + str(df['Email'][0]))
                 st.subheader('Contact: ' + str(df['Mobile No.'][0]))
@@ -531,24 +538,3 @@ if menu_id == 'Resume Parser':
             ## shows skill
             keywords = st_tags(label='### Skills that'+ df['Name'][0] + ' have',
             text=' -- Skills',value=df['Skills'][0],key = '1')
-
-            st.subheader("**Competence Score📝**")
-            st.markdown(
-                        """
-                        <style>
-                            .stProgress > div > div > div > div {
-                                background-color: #d73b5c;
-                            }
-                        </style>""",
-                        unsafe_allow_html=True,
-                    )
-            my_bar = st.progress(0)
-            score = 0
-            if df['competence score'][0] != 'NA':
-                for percent_complete in range(int(df['competence score'][0])):
-                    score +=1
-                    time.sleep(0.1)
-                    my_bar.progress(percent_complete + 1)
-                st.success(df['Name'][0] + "'s Competence Score: " + str(score))
-
-            df.T
