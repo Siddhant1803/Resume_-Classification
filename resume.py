@@ -59,7 +59,7 @@ if menu_id == 'Home':
     for percent_complete in range(100):
        time.sleep(0.001)
        my_bar.progress(percent_complete + 1)
-    tab1,tab2 = st.tabs(["📝 About Project","📉 About Data"])
+    tab1,tab2 = st.tabs(["📝 About Project","📉 Data Overview"])
     with tab1:
          st.title('About Project')
 
@@ -87,8 +87,13 @@ if menu_id == 'Home':
             st.markdown('<img align="right" alt="code"  height="200" width="200" src = "https://static.wixstatic.com/media/15e6c3_8f8cac375de143dc9d1d552090d975cf~mv2.gif">', unsafe_allow_html=True)
 
     with tab2:
-        st.title("About Data")
-        st.subheader("Exploring through data")
+        st.title("Data Overview")
+
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.subheader("Count of Categories")
+            st.image(
 
 def extract_text_from_docx(docx_path):
 
