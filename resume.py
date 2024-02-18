@@ -61,15 +61,14 @@ if menu_id == 'Home':
        my_bar.progress(percent_complete + 1)
     tab1,tab2 = st.tabs(["📝 About Project","📉 Data Overview"])
     with tab1:
-         st.title('About Project')
+        st.title('About Project')
+        st.subheader('Resume Classificaiton')
 
-            st.subheader('Resume Classificaiton')
+        st.header(f"Business Objective: The document classification solution should significantly reduce the manual human effort in the HRM. It should achieve a higher level of accuracy and automation with minimal human intervention.")
 
-            st.header(f"Business Objective: The document classification solution should significantly reduce the manual human effort in the HRM. It should achieve a higher level of accuracy and automation with minimal human intervention.")
+        st.image("https://www.bing.com/images/search?view=detailV2&ccid=4kWTbAjZ&id=F18A23CD4214BEFA96E7364DE7D3A5B0DCC0348E&thid=OIP.4kWTbAjZPun5sAwXIuA54QHaD4&mediaurl=https%3A%2F%2Fres.cloudinary.com%2Frootworks%2Fimage%2Fupload%2Fc_fill%2Cf_auto%2Cg_face%3Aauto%2Ch_630%2Cw_1200%2Fv1%2Fin_the_loop%2F2022-07-08%2Fremote-hiring-tips-itl-jul-aug-22_ttibpn&exph=630&expw=1200&q=resumes+coming+out+of+laptops+image&simid=607991993388856901&form=IRPRST&ck=FA57ECA78F27524282E50E0713FB133B&selectedindex=17&itb=0&ajaxhist=0&ajaxserp=0&pivotparams=insightsToken%3Dccid_LTS6Fz58*cp_0AE28F64A0A80744F0665AB76838060E*mid_795293533BA412F27A4608294E35326E7FBF3F63*simid_608054257537402558*thid_OIP.LTS6Fz58XBMS9dJNiXt9agHaGS&vt=0&sim=11&iss=VSI&ajaxhist=0&ajaxserp=0")
 
-            st.image("https://www.bing.com/images/search?view=detailV2&ccid=4kWTbAjZ&id=F18A23CD4214BEFA96E7364DE7D3A5B0DCC0348E&thid=OIP.4kWTbAjZPun5sAwXIuA54QHaD4&mediaurl=https%3A%2F%2Fres.cloudinary.com%2Frootworks%2Fimage%2Fupload%2Fc_fill%2Cf_auto%2Cg_face%3Aauto%2Ch_630%2Cw_1200%2Fv1%2Fin_the_loop%2F2022-07-08%2Fremote-hiring-tips-itl-jul-aug-22_ttibpn&exph=630&expw=1200&q=resumes+coming+out+of+laptops+image&simid=607991993388856901&form=IRPRST&ck=FA57ECA78F27524282E50E0713FB133B&selectedindex=17&itb=0&ajaxhist=0&ajaxserp=0&pivotparams=insightsToken%3Dccid_LTS6Fz58*cp_0AE28F64A0A80744F0665AB76838060E*mid_795293533BA412F27A4608294E35326E7FBF3F63*simid_608054257537402558*thid_OIP.LTS6Fz58XBMS9dJNiXt9agHaGS&vt=0&sim=11&iss=VSI&ajaxhist=0&ajaxserp=0")
-
-            st.markdown("### **Abstract:**\n\
+        st.markdown("### **Abstract:**\n\
 #### A resume is a brief summary of your skills and experience. Companies recruiters and HR teams have a tough time scanning thousands of qualified resumes. Spending too many labor hours segregating candidates resume's manually is a waste of a company's time, money, and productivity. Recruiters, therefore, use resume classification in order to streamline the resume and applicant screening process. NLP technology allows recruiters to electronically gather, store, and organize large quantities of resumes. Once acquired, the resume data can be easily searched through and analyzed.\
 \n\
 #### Resumes are an ideal example of unstructured data. Since there is no widely accepted resume layout, each resume may have its own style of formatting, different text blocks and different category titles. Building a resume classification and gathering text from it is no easy task as there are so many kinds of layouts of resumes that you could imagine.\n\
