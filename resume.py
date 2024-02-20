@@ -180,7 +180,7 @@ def extract_skills(resume_text):
     tokens = [token.text for token in nlp_text if not token.is_stop]
             
     # reading the csv file
-    data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv",encoding='utf-8') 
+    data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv",encoding='cp1252') 
             
     # extract values
     skills = list(data.columns.values)
@@ -357,7 +357,7 @@ if menu_id == 'Resume Parser':
             tokens = [token.text for token in nlp_text if not token.is_stop]
             
             # reading the csv file
-            data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv",encoding='utf-8') 
+            data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv",encoding='cp1252') 
             
             # extract values
             skills = list(data.columns.values)
