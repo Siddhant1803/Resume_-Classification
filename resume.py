@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
+import sys
+import os
+import constants as cs
 import pandas as pd
 import streamlit as st
 import hydralit_components as hc
@@ -27,6 +29,7 @@ nltk.download('wordnet')
 nltk.download('stopwords')
 nltk.download('omw-1.4')
 import pickle
+sys.coinit_flags = 0
 # load pre-trained model
 import en_core_web_sm
 nlp = en_core_web_sm.load()
