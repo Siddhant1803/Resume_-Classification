@@ -6,9 +6,11 @@ import os
 import constants as cs
 import pandas as pd
 import streamlit as st
+from io import BytesIO
 import hydralit_components as hc
 import docx2txt
 import pdfplumber
+import pickle
 import re
 import nltk
 from nltk.tokenize import RegexpTokenizer
@@ -26,9 +28,9 @@ nltk.download('maxent_ne_chunker')
 nltk.download('words')
 nltk.download('wordnet')
 nltk.download('stopwords')
-stop=set(stopwords.words('english'))
 nltk.download('omw-1.4')
-import pickle
+stop=set(stopwords.words('english'))
+
 sys.coinit_flags = 0
 # load pre-trained model
 import en_core_web_sm
