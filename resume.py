@@ -12,6 +12,7 @@ import hydralit_components as hc
 import docx2txt
 import pdfplumber
 import pickle
+from pickle import load
 import re
 import nltk
 from nltk.tokenize import RegexpTokenizer
