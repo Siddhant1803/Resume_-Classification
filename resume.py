@@ -54,8 +54,8 @@ menu_data = [
 ]
 over_theme = {'txc_inactive': '#FFFFFF'}
 menu_id = hc.nav_bar(
-    menu_defination = menu_data,
-    override_theme = over_theme,
+    menu_definition=menu_data,
+    override_theme=over_theme,
     home_name = 'Home',
     login_name = None,
     hide_streamlit_markers=False, #will show the st hamburger as well as the navbar now!
