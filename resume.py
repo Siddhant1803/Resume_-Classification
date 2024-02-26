@@ -20,13 +20,13 @@ from wordcloud import WordCloud, ImageColorGenerator
 import matplotlib.pyplot  as plt
 from sklearn.ensemble import RandomForestClassifier
 import plotly.express as px
-stop=set(stopwords.words('english'))
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')
 nltk.download('wordnet')
 nltk.download('stopwords')
+stop=set(stopwords.words('english'))
 nltk.download('omw-1.4')
 import pickle
 sys.coinit_flags = 0
