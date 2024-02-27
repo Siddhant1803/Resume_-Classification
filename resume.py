@@ -224,7 +224,7 @@ if menu_id == 'Resume Classification':
         if upload_file1 is not None:
             displayed=extract_text_from_docx(upload_file1)
             cleaned=preprocess(display(upload_file1))
-            predicted= model.predict(model.transform([cleaned]))
+            predicted= model.predict([cleaned])
 
             st.header("The "+ upload_file1.name +" is Applied for"+ " " + predicted + " " + "Profile")
             expander = st.expander("See Resume")
