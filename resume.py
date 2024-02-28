@@ -108,7 +108,7 @@ if menu_id == 'Home':
         with col2:
             st.subheader("Classes from Dataframe")
             st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/multiple_profiles1_2.png?raw=true')
-             st.write('Data only contain 4 categories')
+            st.write('Data only contain 4 categories')
 
         st.subheader("Word Count Category Wise")
         st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/peoplesoftwordcloud.png?raw=true')
