@@ -42,7 +42,7 @@ from spacy.matcher import Matcher
 # initialize matcher with a vocab
 matcher = Matcher(nlp.vocab)
 
-mfile = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_Classification/blob/main/RF.pkl?raw=true').content)
+mfile = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/RF.pkl?raw=true').content)
 model = load(mfile)
 
 #make it look nice from the start
@@ -102,21 +102,21 @@ if menu_id == 'Home':
         
         with col1:
             st.subheader("File Type")
-            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/file_types1_2.png?raw=true')
+            st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/file_types1_2.png?raw=true')
 
         with col2:
             st.subheader("Classes from Dataframe")
-            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/multiple_profiles1_2.png?raw=true')
+            st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/multiple_profiles1_2.png?raw=true')
             st.write('Data only contain 4 categories')
 
         st.subheader("Word Count Category Wise")
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/peoplesoftwordcloud.png?raw=true')
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/sqldeveloperwordcloud.png?raw=true')
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/reactdeveloperwordcloud.png?raw=true')
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/workdaywordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/peoplesoftwordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/sqldeveloperwordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/reactdeveloperwordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/workdaywordcloud.png?raw=true')
 
         st.subheader("Over Word Count in All Category")
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/worldcloudall.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Image/worldcloudall.png?raw=true')
                          
 
 def extract_text_from_docx(docx_path):
@@ -186,7 +186,7 @@ def extract_skills(resume_text):
     tokens = [token.text for token in nlp_text if not token.is_stop]
             
     # reading the csv file
-    data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv") 
+    data = pd.read_csv("https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Resume.csv") 
             
     # extract values
     skills = list(data.columns.values)
@@ -363,7 +363,7 @@ if menu_id == 'Resume Parser':
             tokens = [token.text for token in nlp_text if not token.is_stop]
             
             # reading the csv file
-            data = pd.read_csv("https://github.com/Siddhant1803/Resume_Classification/blob/main/Resume.csv") 
+            data = pd.read_csv("https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Resume.csv") 
             
             # extract values
             skills = list(data.columns.values)
