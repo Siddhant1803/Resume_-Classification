@@ -45,6 +45,9 @@ matcher = Matcher(nlp.vocab)
 mfile = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/RF.pkl?raw=true').content)
 model = load(mfile)
 
+mfile1 = BytesIO(requests.get('https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/vectorizer.pkl?raw=true').content)
+model1 = load(mfile1)
+
 #make it look nice from the start
 st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
 
@@ -225,7 +228,7 @@ if menu_id == 'Resume Classification':
         if upload_file1 is not None:
             displayed=extract_text_from_docx(upload_file1)
             cleaned=preprocess(display(upload_file1))
-            predicted= model.predict([cleaned])
+            predicted= model.predict(model1.transform([cleaned]))
 
             st.header("The "+ upload_file1.name +" is Applied for"+ " " + predicted + " " + "Profile")
             expander = st.expander("See Resume")
