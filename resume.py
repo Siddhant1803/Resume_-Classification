@@ -78,7 +78,7 @@ if menu_id == 'Home':
 
         st.header(f"Business Objective: The document classification solution should significantly reduce the manual human effort in the HRM. It should achieve a higher level of accuracy and automation with minimal human intervention.")
 
-        st.image('https://res.cloudinary.com/people-matters/image/upload/q_auto,f_auto/v1513589400/1513589398.jpg')
+        st.image("Image/OIP.jpg?raw=true")
         st.markdown("### **Abstract:**\n\
 #### A resume is a brief summary of your skills and experience. Companies recruiters and HR teams have a tough time scanning thousands of qualified resumes. Spending too many labor hours segregating candidates resume's manually is a waste of a company's time, money, and productivity. Recruiters, therefore, use resume classification in order to streamline the resume and applicant screening process. NLP technology allows recruiters to electronically gather, store, and organize large quantities of resumes. Once acquired, the resume data can be easily searched through and analyzed.\
 \n\
@@ -102,7 +102,7 @@ if menu_id == 'Home':
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("Count of Categories")
+            st.subheader("File Type")
             st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/categories_count.png?raw=true')
             st.write('Data only contain 4 categories')
 
