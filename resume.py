@@ -355,33 +355,32 @@ if menu_id == 'Resume Parser':
         return education
 
     def extract_skills(resume_text):
-        
-            nlp_text = nlp(resume_text)
-            noun_chunks = nlp_text.noun_chunks
+        nlp_text = nlp(resume_text)
+        noun_chunks = nlp_text.noun_chunks
 
-            # removing stop words and implementing word tokenization
-            tokens = [token.text for token in nlp_text if not token.is_stop]
-            
-            # reading the csv file
-            data = pd.read_csv("https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Resume.csv") 
-            
-            # extract values
-            skills = list(data.columns.values)
-            
-            skillset = []
-            
-            # check for one-grams (example: python)
-            for token in tokens:
-                if token.lower() in skills:
-                    skillset.append(token)
-            
-            # check for bi-grams and tri-grams (example: machine learning)
-            for token in noun_chunks:
-                token = token.text.lower().strip()
-                if token in skills:
-                    skillset.append(token)
-            
-            return [i.capitalize() for i in set([i.lower() for i in skillset])]
+        # removing stop words and implementing word tokenization
+        tokens = [token.text for token in nlp_text if not token.is_stop]
+        
+        # reading the csv file
+        data = pd.read_csv("https://github.com/Siddhant1803/Resume_-Classification_-_Parser-/blob/main/Resume.csv") 
+        
+        # extract values
+        skills = list(data.columns.values)
+        
+        skillset = []
+        
+        # check for one-grams (example: python)
+        for token in tokens:
+            if token.lower() in skills:
+                skillset.append(token)
+        
+        # check for bi-grams and tri-grams (example: machine learning)
+        for token in noun_chunks:
+            token = token.text.lower().strip()
+            if token in skills:
+                skillset.append(token)
+        
+        return [i.capitalize() for i in set([i.lower() for i in skillset])]
     def string_found(string1, string2):
         if re.search(r"\b" + re.escape(string1) + r"\b", string2):
             return True
