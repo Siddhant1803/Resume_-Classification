@@ -1,1 +1,2 @@
-# Resume Classification and Parser : https://fzqkecahuddrh5u7cxpnsk.streamlit.app
+# Resume Classification and Parser
+Web App : https://fzqkecahuddrh5u7cxpnsk.streamlit.app
