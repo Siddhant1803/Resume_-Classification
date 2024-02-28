@@ -78,7 +78,7 @@ if menu_id == 'Home':
 
         st.header(f"Business Objective: The document classification solution should significantly reduce the manual human effort in the HRM. It should achieve a higher level of accuracy and automation with minimal human intervention.")
 
-        st.image("Image/OIP.jpg?raw=true")
+        st.image("https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/OIP.png?raw=true")
         st.markdown("### **Abstract:**\n\
 #### A resume is a brief summary of your skills and experience. Companies recruiters and HR teams have a tough time scanning thousands of qualified resumes. Spending too many labor hours segregating candidates resume's manually is a waste of a company's time, money, and productivity. Recruiters, therefore, use resume classification in order to streamline the resume and applicant screening process. NLP technology allows recruiters to electronically gather, store, and organize large quantities of resumes. Once acquired, the resume data can be easily searched through and analyzed.\
 \n\
@@ -103,18 +103,21 @@ if menu_id == 'Home':
         
         with col1:
             st.subheader("File Type")
-            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/categories_count.png?raw=true')
-            st.write('Data only contain 4 categories')
+            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/file_types1_2.png?raw=true')
 
         with col2:
-            st.subheader("Overall Common Words in Data")
-            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/overall_common_word.png?raw=true')
+            st.subheader("Classes from Dataframe")
+            st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/multiple_profiles1_2.png?raw=true')
+             st.write('Data only contain 4 categories')
 
         st.subheader("Word Count Category Wise")
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/word_count_categories_wise.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/peoplesoftwordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/sqldeveloperwordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/reactdeveloperwordcloud.png?raw=true')
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/workdaywordcloud.png?raw=true')
 
-        st.subheader("Top 10 Words Contain in each Category")
-        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/top_10_words_categories_wise.png?raw=true')
+        st.subheader("Over Word Count in All Category")
+        st.image('https://github.com/Siddhant1803/Resume_Classification/blob/main/Image/worldcloudall.png?raw=true')
                          
 
 def extract_text_from_docx(docx_path):
