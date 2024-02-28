@@ -222,7 +222,6 @@ if menu_id == 'Resume Classification':
     tab1, tab2 = st.tabs(["💾 Single File","📁 Multiple Files"])
 
     with tab1:
-
         upload_file1 = st.file_uploader('', type= ['docx'], accept_multiple_files=False)   
         st.write('*Note: For different Resumes Results Reupload')  
         if upload_file1 is not None:
