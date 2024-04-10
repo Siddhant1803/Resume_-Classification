@@ -228,9 +228,6 @@ if menu_id == 'Resume Classification':
             displayed=extract_text_from_docx(upload_file1)
             cleaned=preprocess(display(upload_file1))
             predicted= model.predict(model1.transform([cleaned]))
-            st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
-            expander = st.expander("See Resume")
-            expander.write(displayed)
             if predicted == 3:
                 classify = "Workday"
                 st.image("https://www.workday.com/content/dam/web/en-us/images/social/workday-og-theme.png",width=480)
@@ -243,6 +240,10 @@ if menu_id == 'Resume Classification':
             elif predicted == 0:
                 classify = "Peoplesoft"
                 st.image("https://s3.amazonaws.com/questoracle-staging/wordpress/uploads/2019/07/25164143/PeopleSoft-Now.jpg",width=480)
+                
+            st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
+            expander = st.expander("See Resume")
+            expander.write(displayed)
 
     with tab2:
         st.write('Upload Folder Containing Multiple .docx Files')
