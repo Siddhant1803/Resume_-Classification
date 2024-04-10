@@ -228,7 +228,6 @@ if menu_id == 'Resume Classification':
             displayed=extract_text_from_docx(upload_file1)
             cleaned=preprocess(display(upload_file1))
             predicted= model.predict(model1.transform([cleaned]))
-
             st.header("The "+ upload_file1.name +" is Applied for"+ " " + predicted + " " + "Profile")
             expander = st.expander("See Resume")
             expander.write(displayed)
