@@ -230,20 +230,32 @@ if menu_id == 'Resume Classification':
             predicted= model.predict(model1.transform([cleaned]))
             if predicted == 3:
                 classify = "Workday"
+                st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
+                expander = st.expander("See Resume")
+                expander.write(displayed)
                 st.image("https://www.workday.com/content/dam/web/en-us/images/social/workday-og-theme.png",width=480)
+                
             elif predicted == 2:
                 classify = "SQL Developer"
+                st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
+                expander = st.expander("See Resume")
+                expander.write(displayed)
                 st.image("https://wallpaperaccess.com/full/2138094.jpg",width=480)
+                
             elif predicted == 1:
                 classify = "React Developer"
+                st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
+                expander = st.expander("See Resume")
+                expander.write(displayed)
                 st.image("https://i0.wp.com/www.electrumitsolutions.com/wp-content/uploads/2020/12/wp4923992-react-js-wallpapers.png",width=480)
+                
             elif predicted == 0:
                 classify = "Peoplesoft"
+                st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
+                expander = st.expander("See Resume")
+                expander.write(displayed)
                 st.image("https://s3.amazonaws.com/questoracle-staging/wordpress/uploads/2019/07/25164143/PeopleSoft-Now.jpg",width=480)
                 
-            st.header("The "+ upload_file1.name +" is Applied for"+ " " + classify + " " + "Profile")
-            expander = st.expander("See Resume")
-            expander.write(displayed)
 
     with tab2:
         st.write('Upload Folder Containing Multiple .docx Files')
